@@ -178,8 +178,8 @@ class SocketStream(AsyncSocketStream):
 
     def is_readable(self) -> bool:
         transport = self.stream_reader._transport  # type: ignore
-        sock: socket.socket = transport.get_extra_info("socket")
-        return is_socket_readable(sock.fileno())
+        sock: Optional[socket.socket] = transport.get_extra_info("socket")
+        return sock and is_socket_readable(sock.fileno())
 
 
 class Lock(AsyncLock):
